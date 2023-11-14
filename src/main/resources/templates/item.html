@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品詳細</title>
+</head>
+
+<body>
+    ログインアカウント：<span th:text="${userName}"></span><br>
+    <a href="/showSearch">もどる</a>
+    <h1>商品詳細</h1>
+    <span style = "color:red" th:text="${msg}"></span>
+    <table>
+        <tr><th>商品名：</th><td th:text="${item.name}"></td></tr>
+        <tr><th>価格：</th><td th:text="${item.price}"></td></tr>
+    </table>
+    <form action="/addItem" method="get">
+        購入数：<select name="purchaseNum"><option th:each="num:${#numbers.sequence(1, item.stock)}" th:value="${num}" th:text="${num}"></option></select>
+        <input type="hidden" name="code" th:value="${item.code}">
+        <input type="submit" value="カートに追加">
+    </form>
+</body>
+
+</html>

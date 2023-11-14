@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>カート</title>
+    </head>
+    <body>
+        ログインアカウント：<span th:text="${userName}"></span><br>
+        <a href="/showSearch">もどる</a>
+        <h1>カート</h1>
+        <block th:if="${cart != null}">
+            <table border="1">
+                <tr><th>商品名</th><th>単価</th><th colspan="2">購入数</th><th></th></tr>
+                <tr th:each="cartItem:${cart.itemList}">
+                    <td th:text="${cartItem.item.name}"></td>
+                    <td>¥<span th:text="${cartItem.item.price}"></span></td>
+                    <form action="/updatePurchaseNum" method="get">
+                        <input type="hidden" name="code" th:value="${cartItem.item.code}">
+                        <td><select name="purchaseNum"><option th:each="num:${#numbers.sequence(1, cartItem.item.stock)}" th:value="${num}" th:text="${num}" th:selected="${cartItem.purchaseNum==num}"></option></select></td>
+                        <td><input type="submit" value="更新"></td>
+                    </form>
+                    <td><a th:href="@{/deleteItem?code={code}(code=${cartItem.item.code})}">削除</a></td>
+                </tr>
+                <tr><th>合計値</th><td colspan="4">¥<span th:text="${cart.totalPrice}"></span></td></tr>
+            </table>
+            <form action="/showConfirm" method="get">
+                <input type="submit" value="カートの商品を購入">
+            </form>
+        </block>
+        <block th:if="${cart == null}">
+            <p>カートに商品がありません</p>
+        </block>
+    </body>
+</html>

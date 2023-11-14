@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品一覧</title>
+</head>
+
+<body>
+    ログインアカウント：<span th:text="${userName}"></span><br>
+    <a href="/">ログアウト</a><span>  </span><a href="/showCart">カート</a>
+    <h1>商品一覧</h1>
+    <form action="/search" method="get">
+        <select name="category">
+            <option value="0">カテゴリー選択</option>
+            <option th:each="category:${categories}" th:value="${category.code}" th:text="${category.name}"></option>
+        </select>
+        <input type="text" name="keyword"><br>
+        <input type="submit" value="検索">
+    </form>
+    <span style="color:red" th:text="${msg}"></span>
+    <block th:if="${items != null}">
+        <table>
+            <tr th:each="item:${items}">
+                <td><a th:href="@{/item?code={code}(code=${item.code})}" th:text="${item.name}"></a></td>
+                <td>¥<span th:text="${item.price}"></span></td>
+            </tr>
+        </table>
+    </block>
+</body>
+
+</html>

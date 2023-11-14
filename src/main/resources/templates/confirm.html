@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>購入確認</title>
+    </head>
+    <body>
+        ログインアカウント：<span th:text="${userName}"></span><br>
+        <a href="/showCart">もどる</a>
+        <h1>購入確認</h1>
+        <span style = "color:red" th:text="${msg}"></span>
+        <block th:if="${msg}==null">
+            <p>以下の商品を購入します。<br>よろしいですか？</p>
+        </block>
+        <table border="1">
+            <tr><th>商品名</th><th>単価</th><th colspan="2">購入数</th></tr>
+            <tr th:each="cartItem:${cart.itemList}">
+                <td th:text="${cartItem.item.name}"></td>
+                <td>¥<span th:text="${cartItem.item.price}"></span></td>
+                <td th:text="${cartItem.purchaseNum}"></td>
+            </tr>
+            <tr><th>合計値</th><td colspan="3">¥<span th:text="${cart.totalPrice}"></span></td></tr>
+        </table>
+        <form action="/purchase" method="get">
+            <input type="submit" value="購入確定">
+        </form>
+    </body>
+</html>
