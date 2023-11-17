@@ -16,6 +16,7 @@ public class CartLogic {
     HttpSession session;
 
     public ModelAndView showCart(CartBean cart, ModelAndView mv){
+        System.out.println('aaaaaa');
         mv.addObject("cart", cart);
         UserEntity loginUser = (UserEntity)session.getAttribute("loginUser");
         mv.addObject("userName", loginUser.getName());
